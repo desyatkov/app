@@ -2,15 +2,15 @@ import React, {Component} from 'react';
 import classNames from 'classnames';
 
 export default class Post extends Component {
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
         this.handleClickFilter = this.handleClickFilter.bind(this);
     }
 
     handleClickFilter(e) {
         if(e.target.className === 'tag'){
             this.props.filterFromPost(e.target.innerText)
-        }
+        }        
     }
 
     handleDelete = () => {
@@ -27,15 +27,26 @@ export default class Post extends Component {
             content,
             onDelete,
             time,
-            isActive
+            isActive,
+            status
         } = this.props;
         
-        let activeClass = classNames({ 'active-edit': isActive })
+        let activeClass = classNames({ 
+            'active-edit': isActive,
+            'no-active':   !isActive,
+            'is-edit':     status === 'edit'
+        })
 
         return (
             <div className={activeClass}>
-                <span onClick={this.handleEdit}>✏</span>
-                <span onClick={this.handleDelete}>×</span>
+            { this.props.status !== 'edit' 
+                ? <div>
+                    <span onClick={this.handleEdit}>✏</span>
+                    <span onClick={this.handleDelete}>×</span>
+                  </div>
+                : ""
+            }  
+                
                 <div>{title}</div>
                 <div
                     dangerouslySetInnerHTML={{__html: content}} 

@@ -9,7 +9,8 @@ export default class Posts extends Component {
             notes,
             onNoteDelete,
             onNoteEdit,
-            activeClass
+            activeClass,
+            status
         } = this.props;
 
         return(
@@ -26,6 +27,7 @@ export default class Posts extends Component {
                             id             = {item.id}
                             time           = {item.timestamp}
                             filterFromPost = {this.props.onClickFilter}
+                            status         = {status}
                         />
                     )
                 )}

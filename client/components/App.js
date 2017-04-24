@@ -63,7 +63,6 @@ export default class App extends Component {
         this.setState({
             activeId: stat,
             status: 'new'
-            // editText:  ""
         })
     }
     
@@ -136,6 +135,7 @@ export default class App extends Component {
                            onNoteEdit    = {this.handlePostEdit}
                            activeClass   = {this.state.activeId}
                            onClickFilter = {this.handlerPostsFlt}
+                           status        = {this.state.status}
                     />
                 </div>
                 <div>
