@@ -1,4 +1,77 @@
+html, body, #root, .app-area {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+.app-area {
+    display: grid;
+    grid-template-columns: 5vw auto 200px 5vw;
+    grid-template-rows:    5vw 30px 50px 80px auto 5vw;
+
+    grid-template-areas: 
+            ". header  header  ."
+            ". find    profile ."
+            ". field   profile ."
+            ". field   tags    ."
+            ". main    tags    ."
+            ". footer  footer  .";
+    grid-column-gap: 10px;
+    grid-row-gap:    10px;
+    
+    > div {
+        // background-color: coral;
+    }        
+}
+.find-area {
+    grid-area: find;
+    
+    > input {
+        box-sizing: border-box;
+        width: 100%;
+        height: 100%;
+        border-radius: 20px;
+        border: 1px solid coral;
+    }
+}
+.footer-area {
+    background-color: coral;
+    grid-area: footer;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}   
+.header {
+    background-color: coral;
+    grid-area: header;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    >div {
+        height: auto;
+    }
+}
+.profile-area{
+    background-color: coral;
+    grid-area: profile;
+}
+.text-area {
+    background-color: coral;
+    grid-area: field;
+}
+.post-area {
+    background-color: coral;
+    grid-area: main;
+}
+.tags-area{
+    background-color: coral;
+    grid-area: tags;
+}
+
 .active-edit {
+    background-color: coral;
     border: 1px solid slategrey;
 }
 
@@ -9,5 +82,17 @@ span.tag {
     background-color: steelblue;
     border-radius: 20px;
     color: #fff;
-    cursor: pointer;
+    font-size: 16px;
+    font-weight: 300;
+}
+
+.is-new {
+    .tag {
+        cursor: pointer;
+    }
+}
+.is-edit {
+    .tag {
+        cursor: no-drop;
+    }
 }

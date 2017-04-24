@@ -120,30 +120,36 @@ export default class App extends Component {
 
     render(){        
         return (
-            <div>
-                <div>
-                    <Field onPostAdd = {this.handlePostAdd}
-                           editText  = {this.state.editText}
-                           editId    = {this.state.editId}
-                           status    = {this.state.status}
-                           cancelActiveClass  = {this.handleCancel}
+            <div className= "app-area" >
+                <div className='header'><div>React</div></div>
+                <div className='profile-area'>profile</div>
+                <div className="find-area">
+                    <input type="text" size="40" />
+                </div>
+                <div className = "text-area">
+                    <Field onPostAdd         = {this.handlePostAdd}
+                           editText          = {this.state.editText}
+                           editId            = {this.state.editId}
+                           status            = {this.state.status}
+                           cancelActiveClass = {this.handleCancel}
                         />
                 </div>
-                <div>
-                    <Posts allpost       = {this.state.allPosts}
-                           onNoteDelete  = {this.handlePostDelete}
-                           onNoteEdit    = {this.handlePostEdit}
-                           activeClass   = {this.state.activeId}
-                           onClickFilter = {this.handlerPostsFlt}
-                           status        = {this.state.status}
+                <div className = "post-area">
+                    <Posts allpost           = {this.state.allPosts}
+                           onNoteDelete      = {this.handlePostDelete}
+                           onNoteEdit        = {this.handlePostEdit}
+                           activeClass       = {this.state.activeId}
+                           onClickFilter     = {this.handlerPostsFlt}
+                           status            = {this.state.status}
                     />
                 </div>
-                <div>
-                    <Tagmng ptags={this.state.parseTags}
-                            onValueChange={this.filterByTags}
-                            showAllhandler={this.showAll}
+                <div className = "tags-area">
+                    <Tagmng ptags            = {this.state.parseTags}
+                            onValueChange    = {this.filterByTags}
+                            showAllhandler   = {this.showAll}
                     />
                 </div>
+                <div className="footer-area">footer</div>
             </div>
         )
     }

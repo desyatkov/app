@@ -8,7 +8,7 @@ export default class Post extends Component {
     }
 
     handleClickFilter(e) {
-        if(e.target.className === 'tag'){
+        if(e.target.className === 'tag' && this.props.status !== 'edit'){
             this.props.filterFromPost(e.target.innerText)
         }        
     }
@@ -34,7 +34,8 @@ export default class Post extends Component {
         let activeClass = classNames({ 
             'active-edit': isActive,
             'no-active':   !isActive,
-            'is-edit':     status === 'edit'
+            'is-edit':     status === 'edit',
+            'is-new':     status !== 'edit'
         })
 
         return (
