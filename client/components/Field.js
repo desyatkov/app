@@ -5,7 +5,7 @@ import tagParsed from './tagParsed';
 import Remarkable from 'remarkable';
 import Moment from 'moment';
 import toMarkdown from 'to-markdown';
-
+import Tag from './Tag';
 
 export default class Field extends Component{
     constructor(props){

@@ -2,6 +2,17 @@ import React, {Component} from 'react';
 import classNames from 'classnames';
 
 export default class Post extends Component {
+    constructor(){
+        super();
+        this.handleClickFilter = this.handleClickFilter.bind(this);
+    }
+
+    handleClickFilter(e) {
+        if(e.target.className === 'tag'){
+            this.props.filterFromPost(e.target.innerText)
+        }
+    }
+
     handleDelete = () => {
         this.props.onDelete( this.props.id );
     }
@@ -26,7 +37,10 @@ export default class Post extends Component {
                 <span onClick={this.handleEdit}>✏</span>
                 <span onClick={this.handleDelete}>×</span>
                 <div>{title}</div>
-                <div dangerouslySetInnerHTML={{__html: content}} />
+                <div
+                    dangerouslySetInnerHTML={{__html: content}} 
+                    onClick={this.handleClickFilter}
+                />
                 <div>{time}</div>
             </div>
         )

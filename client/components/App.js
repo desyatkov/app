@@ -104,6 +104,15 @@ export default class App extends Component {
         });
     }
 
+    filterByTagName = str => {
+        return this.state.parseTags.filter( o => o.key === str )
+    }
+
+    handlerPostsFlt = str => {
+        const idsRelevant = this.filterByTagName(str)[0].ids;
+        this.filterByTags(idsRelevant);
+    }
+
     showAll = () => {
         this.setState({
             allPosts: ALL_LIST
@@ -122,10 +131,11 @@ export default class App extends Component {
                         />
                 </div>
                 <div>
-                    <Posts allpost      = {this.state.allPosts}
-                           onNoteDelete = {this.handlePostDelete}
-                           onNoteEdit   = {this.handlePostEdit}
-                           activeClass  = {this.state.activeId}
+                    <Posts allpost       = {this.state.allPosts}
+                           onNoteDelete  = {this.handlePostDelete}
+                           onNoteEdit    = {this.handlePostEdit}
+                           activeClass   = {this.state.activeId}
+                           onClickFilter = {this.handlerPostsFlt}
                     />
                 </div>
                 <div>
