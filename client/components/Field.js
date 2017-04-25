@@ -11,18 +11,18 @@ export default class Field extends Component{
     constructor(props){
         super(props);
         this.state = {
-            title: "",
-            text:  "",
-            markdown: "",
-            timestamp: "",
+            // title: '',
+            text:  '',
+            markdown: '',
+            timestamp: '',
             tags: [],
-            editId: "",
-            id: "",
-            status: "new"
+            editId: '',
+            id: '',
+            status: 'new'
         }    
     }
     
-    mdParse = str => toMarkdown( str.replace(/<\/?span.*?>/gi, "") )
+    mdParse = str => toMarkdown( str.replace(/<\/?span.*?>/gi, '') )
 
     componentWillReceiveProps(nextProps, nextState) {
 
@@ -46,11 +46,11 @@ export default class Field extends Component{
                                         });
     }
 
-    handlerTitle = e => {
-        this.setState({
-            title: e.target.value
-        })
-    }
+    // handlerTitle = e => {
+    //     this.setState({
+    //         title: e.target.value
+    //     })
+    // }
 
     handlerText = e => {
         const tagParse = tagParsed(e.target.value);
@@ -62,18 +62,17 @@ export default class Field extends Component{
 
     cancelHandler =() => {
         this.setState({
-            status: "new",
+            status: 'new',
             id: 0,
-            text:  ""
+            text:  ''
         })
         
-        this.props.cancelActiveClass(false, "new");
+        this.props.cancelActiveClass(false, 'new');
     }
 
     onAddHandler = () => {        
         const newPost = {
             id:     this.state.id || Date.now(),
-            title:  this.state.title,
             text:   this.state.markdown,
             timestamp: Moment().format('MMMM Do YYYY, HH:mm')
         }
@@ -84,7 +83,7 @@ export default class Field extends Component{
             ids: [newPost.id]
         }
         this.setState({
-            status: "new"
+            status: 'new'
         })
         this.props.onPostAdd(newPost, newTags);
         this.resetState();
@@ -98,52 +97,45 @@ export default class Field extends Component{
 
     resetState = () => {
         this.setState({
-            status: "new",
-            title: "",
-            text:  "",
-            markdown: "",
-            timestamp: "",
+            status: 'new',
+            text:  '',
+            markdown: '',
+            timestamp: '',
             tags: [],
-            editId: "",
-            id: ""
+            editId: '',
+            id: ''
         })
     }
-    
-    add = (text) => {
-            this.setState({
-                text:  text,
-            })
-        }
         
     render(){
         let { editText, editId, text, status } = this.props;
 
         return (
-            <div className="editor">
+            <div className='editor'>
                 <Tabs selected={0}>
-                    <Pane label="Tab 1">
-                        <div>
-                            <input type="text" 
-                                placeholder="title"
-                                value={this.state.title}
-                                onChange={this.handlerTitle}
-                            />
-                            
-                            <textarea rows="4" 
-                                      cols="50"
-                                      value={ this.state.text }
+                    <Pane label='text'>
+                        <div className='textarea_wrap'>
+                            <textarea value={ this.state.text }
                                       onChange={this.handlerText}
                                       
                             />
                         </div>
                     </Pane>
-                    <Pane label="Tab 2">
-                        <div className="content"
-                             dangerouslySetInnerHTML={{__html: this.state.markdown}} />
+                    <Pane label='markdown'>
+                        {this.state.markdown 
+                          ? <div className='content'
+                                 dangerouslySetInnerHTML={{__html: this.state.markdown}}/>
+                          : <div className='content-empty'>Nothing to show</div>       
+                        }
                     </Pane>
                 </Tabs>
-                <button onClick={this.onAddHandler}>{ this.state.status === 'new' ? "Add Post" : "Edit ✏" }</button>
-                { this.state.status !== 'new' ? <button onClick={this.cancelHandler}>Cancel</button> : null } 
+                <button onClick={this.onAddHandler}
+                        disabled={!this.state.text}
+                >
+                    { this.state.status === 'new' ? 'Add Post' : 'Edit ✏' }
+                </button>
+                { this.state.status !== 'new' ? <button onClick={this.cancelHandler}>Cancel</button> : null }
+                <span className='comment'>use @ for add tag to post</span> 
         </div>            
         )
     }

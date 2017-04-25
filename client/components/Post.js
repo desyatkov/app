@@ -23,7 +23,6 @@ export default class Post extends Component {
 
     render(){
         const {
-            title,
             content,
             onDelete,
             time,
@@ -34,21 +33,21 @@ export default class Post extends Component {
         let activeClass = classNames({ 
             'active-edit': isActive,
             'no-active':   !isActive,
-            'is-edit':     status === 'edit',
-            'is-new':     status !== 'edit'
+            'is-edit':     status   === 'edit',
+            'is-new':      status !== 'edit',
+            'post':        true
         })
 
         return (
             <div className={activeClass}>
             { this.props.status !== 'edit' 
-                ? <div>
+                ? <div className='icons'>
                     <span onClick={this.handleEdit}>✏</span>
                     <span onClick={this.handleDelete}>×</span>
                   </div>
                 : ""
             }  
                 
-                <div>{title}</div>
                 <div
                     dangerouslySetInnerHTML={{__html: content}} 
                     onClick={this.handleClickFilter}
