@@ -11,14 +11,13 @@ export default class Field extends Component{
     constructor(props){
         super(props);
         this.state = {
-            // title: '',
-            text:  '',
-            markdown: '',
+            text:      '',
+            markdown:  '',
             timestamp: '',
-            tags: [],
-            editId: '',
-            id: '',
-            status: 'new'
+            tags:      [],
+            editId:    '',
+            id:        '',
+            status:    'new'
         }    
     }
     
@@ -27,13 +26,12 @@ export default class Field extends Component{
     componentWillReceiveProps(nextProps, nextState) {
 
         if( nextProps.status === 'edit' ){
-            
             const tagParse = tagParsed(nextProps.editText);
             this.setState({
-                    text:   this.mdParse(nextProps.editText),
-                    id:     nextProps.editId,
+                    text:     this.mdParse(nextProps.editText),
+                    id:       nextProps.editId,
                     markdown: this.remarkable.render(tagParse),
-                    status: nextProps.status,
+                    status:   nextProps.status,
                 }, function(){ this.getTags() })
             }
     }
@@ -46,12 +44,6 @@ export default class Field extends Component{
                                         });
     }
 
-    // handlerTitle = e => {
-    //     this.setState({
-    //         title: e.target.value
-    //     })
-    // }
-
     handlerText = e => {
         const tagParse = tagParsed(e.target.value);
         this.setState({
@@ -62,9 +54,10 @@ export default class Field extends Component{
 
     cancelHandler =() => {
         this.setState({
-            status: 'new',
-            id: 0,
-            text:  ''
+            status:   'new',
+            id:       0,
+            text:     '',
+            markdown: ''
         })
         
         this.props.cancelActiveClass(false, 'new');
@@ -113,7 +106,7 @@ export default class Field extends Component{
         return (
             <div className='editor'>
                 <Tabs selected={0}>
-                    <Pane label='text'>
+                    <Pane label='markdown'>
                         <div className='textarea_wrap'>
                             <textarea value={ this.state.text }
                                       onChange={this.handlerText}
@@ -121,7 +114,7 @@ export default class Field extends Component{
                             />
                         </div>
                     </Pane>
-                    <Pane label='markdown'>
+                    <Pane label='md preview'>
                         {this.state.markdown 
                           ? <div className='content'
                                  dangerouslySetInnerHTML={{__html: this.state.markdown}}/>
