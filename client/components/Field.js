@@ -53,12 +53,7 @@ export default class Field extends Component{
     }
 
     cancelHandler =() => {
-        this.setState({
-            status:   'new',
-            id:       0,
-            text:     '',
-            markdown: ''
-        })
+        this.resetState();
         
         this.props.cancelActiveClass(false, 'new');
     }
@@ -75,9 +70,11 @@ export default class Field extends Component{
             tags: this.state.tags,
             ids: [newPost.id]
         }
+
         this.setState({
             status: 'new'
         })
+
         this.props.onPostAdd(newPost, newTags);
         this.resetState();
     }
