@@ -5,41 +5,38 @@ import Tagmng from './Tagmng'
 import parseAllTags from './parseTags'
 import '../style/app.scss'
 import _ from 'lodash';
-let ALL_LIST=[];
+
 
 export default class App extends Component {
     constructor(props){
         super(props);
             this.state = {
-                tempPosts: "",
-                allPosts: [
-                    {id:1, text: "<h3>Shut up and get to the point!</h3><p>I guess because my parents keep telling me to be more ladylike. As though! Goodbye, cruel world. Goodbye, cruel lamp.</p><br/> <span class='tag'>@a</span>", timestamp: 'April 26th 2017, 00:00'},
-                    {id:2, text: "<h3>Who are you, my warranty?!</h3><p>No! The cat shelter's on to me. Yes, if you make it look like an electrical fire. When you do things right, people won't be sure you've done anything at all. Why am I sticky and naked? Did I miss something fun?<br><span class='tag'>@a</span></p>", timestamp: 'April 26th 2017, 00:00'}
-                ],
-                tags: this.props.tags,
+                tempPosts: this.props.defPosts,
+                allPosts:  this.props.defPosts,
+                tags:      this.props.tags,
                 parseTags: parseAllTags(this.props.tags)
             }   
             
-            ALL_LIST = this.state.allPosts;
+            this.ALL_LIST = this.state.allPosts;
     }
 
     handlePostAdd = (newPost, newTags) => {
-        let postExist = _.find(ALL_LIST, o => o.id == newPost.id );
+        let postExist = _.find(this.ALL_LIST, o => o.id == newPost.id );
         
         if(!!postExist){
             let currTags = this.state.tags;
             let index = _.indexOf(currTags, _.find(currTags, o => o.ids[0] === newTags.ids[0]))
             currTags.splice(index, 1, newTags);
 
-            ALL_LIST.forEach( o => {
+            this.ALL_LIST.forEach( o => {
                 if (o.id === newPost.id){
                     o.text = newPost.text
                 }
             })
             
             this.setState({
-                tempPosts: ALL_LIST,
-                allPosts:  ALL_LIST,
+                tempPosts: this.ALL_LIST,
+                allPosts:  this.ALL_LIST,
                 editText:  '',
                 text:      '',
                 tags:      currTags,
@@ -49,15 +46,15 @@ export default class App extends Component {
             })
         } else {
             this.setState({
-                tempPosts: [newPost, ...ALL_LIST],
-                allPosts:  [newPost, ...ALL_LIST],
+                tempPosts: [newPost, ...this.ALL_LIST],
+                allPosts:  [newPost, ...this.ALL_LIST],
                 tags:      [newTags, ...this.state.tags],
                 parseTags: parseAllTags( [newTags, ...this.state.tags] ),
                 editText: '',
                 text: '',
                 status: newPost.statusNewPost,
                 activeId: null
-            }, () => { ALL_LIST = this.state.allPosts} );
+            }, () => { this.ALL_LIST = this.state.allPosts} );
         }
     }
 
@@ -80,7 +77,7 @@ export default class App extends Component {
             parseTags: parseAllTags(filterd),
             activeId: null
         }, () => {
-            ALL_LIST = this.state.allPosts
+            this.ALL_LIST = this.state.allPosts
         } );
     }
 
@@ -98,7 +95,7 @@ export default class App extends Component {
 
     filterByTags = (ids) => {
         const newList = ids.map( ids => {
-                return _.find( ALL_LIST, (o) =>  o.id == ids  )
+                return _.find( this.ALL_LIST, (o) =>  o.id == ids  )
             }
         ); 
         this.setState({
@@ -117,19 +114,19 @@ export default class App extends Component {
 
     showAll = () => {
         this.setState({
-            allPosts: ALL_LIST
+            allPosts: this.ALL_LIST
         });
     }
 
     findPost = (e) => {
-        let filtredPosts = ALL_LIST.filter( item => item.text.toLowerCase().includes(e.target.value.toLowerCase()) )
+        let filtredPosts = this.ALL_LIST.filter( item => item.text.toLowerCase().includes(e.target.value.toLowerCase()) )
         if(e.target.value){
             this.setState({
                 allPosts: filtredPosts
             })
         } else {
            this.setState({
-                allPosts: ALL_LIST
+                allPosts: this.ALL_LIST
             }) 
         }
     }
@@ -147,7 +144,7 @@ export default class App extends Component {
 
         if (savedPosts) {
             this.setState({ allPosts: savedPosts, tempPosts: savedPosts });
-            ALL_LIST = savedPosts;
+            this.ALL_LIST = savedPosts;
         }
     }
     
@@ -168,7 +165,7 @@ export default class App extends Component {
                 <div className='profile-area'>your profile</div>
                 <div className='find-area'>
                     <input type='text'
-                           placeholder='find post'
+                           placeholder='find post or @tag'
                            onChange={this.findPost}
                            />
                 </div>
@@ -208,5 +205,9 @@ App.defaultProps = {
     tags: [
         { id:12413245235, tags: ['@a'], ids: [1] },
         { id:12345235345, tags: ['@b'], ids: [2] },
+    ],
+    defPosts: [
+        {id:1, text: "<h3>Shut up and get to the point!</h3><p>I guess because my parents keep telling me to be more ladylike. As though! Goodbye, cruel world. Goodbye, cruel lamp.</p><br/> <span class='tag'>@a</span>", timestamp: 'April 26th 2017, 00:00'},
+        {id:2, text: "<h3>Who are you, my warranty?!</h3><p>No! The cat shelter's on to me. Yes, if you make it look like an electrical fire. When you do things right, people won't be sure you've done anything at all. Why am I sticky and naked? Did I miss something fun?<br><span class='tag'>@b</span></p>", timestamp: 'April 26th 2017, 00:00'}
     ]
 };
