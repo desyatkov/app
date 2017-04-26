@@ -6,6 +6,7 @@ import Remarkable from 'remarkable';
 import Moment from 'moment';
 import toMarkdown from 'to-markdown';
 import Tag from './Tag';
+import PropTypes from 'prop-types';
 
 export default class Field extends Component{
     constructor(props){
@@ -129,4 +130,14 @@ export default class Field extends Component{
         </div>            
         )
     }
+}
+
+Field.PropTypes = {
+    text:      PropTypes.number,
+    markdown:  PropTypes.number,
+    timestamp: PropTypes.number,
+    tags:      PropTypes.array,
+    editId:    PropTypes.number,
+    id:        PropTypes.number,
+    status:    PropTypes.number,
 }

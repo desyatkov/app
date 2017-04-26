@@ -5,6 +5,7 @@ import Tagmng from './Tagmng'
 import parseAllTags from './parseTags'
 import '../style/app.scss'
 import _ from 'lodash';
+import PropTypes from 'prop-types';
 
 
 export default class App extends Component {
@@ -199,6 +200,18 @@ export default class App extends Component {
             </div>
         )
     }
+}
+
+App.PropTypes = {
+    name: PropTypes.string,
+    tempPosts: PropTypes.object,
+    allPosts:  PropTypes.object,
+    editText:  PropTypes.string,
+    text:      PropTypes.string,
+    tags:      PropTypes.array,
+    parseTags: PropTypes.array,
+    status:    PropTypes.string,
+    activeId:  PropTypes.number
 }
 
 App.defaultProps = {
